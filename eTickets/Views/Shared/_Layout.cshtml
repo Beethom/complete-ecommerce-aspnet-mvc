@@ -87,15 +87,8 @@
 
     <div class="container-fluid">
         <main role="main" class="pb-3">
-            <!-- Container for the welcome message -->
-            <div id="welcomeMessage">
-                <h1>eTickets</h1>
-                <p>Your ultimate destination for booking movie tickets online.</p>
-                <a class="btn btn-primary" id="shopNowButton" href="/Movies/Index">Shop Now</a> <!-- Updated link -->
-            </div>
-
-            <!-- Movie listing section -->
-            <div id="movieListing">
+            
+    
                 @RenderBody()
             </div>
         </main>
@@ -113,36 +106,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <!-- JavaScript to control the welcome message -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const shopNowButton = document.getElementById("shopNowButton");
-            const welcomeDiv = document.getElementById("welcomeMessage");
-            const movieListingDiv = document.getElementById("movieListing");
-
-            // Check if the welcome message has already been shown
-            if (!localStorage.getItem("welcomeShown")) {
-                // Show the welcome message on page load
-                welcomeDiv.style.display = "flex";
-                movieListingDiv.style.display = "none"; // Hide the movie listing
-
-                // Set the localStorage item to prevent the welcome message from showing again
-                localStorage.setItem("welcomeShown", "true");
-
-                // Optionally, fade out the welcome message after 5 seconds
-                setTimeout(function () {
-                    welcomeDiv.style.opacity = "0";
-                    setTimeout(function () {
-                        welcomeDiv.style.display = "none"; // Hide the welcome message
-                        movieListingDiv.style.display = "block"; // Show the movie listing
-                    }, 1000);
-                }, 5000); // 5 seconds
-            } else {
-                // If the welcome message has already been shown, hide it directly
-                welcomeDiv.style.display = "none";
-                movieListingDiv.style.display = "block"; // Show the movie listing
-            }
-        });
-    </script>
+   
+     
 </body>
 </html>
