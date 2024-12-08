@@ -13,6 +13,9 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 
 //Services configuration
 builder.Services.AddScoped<IActorsService, ActorsService>();
+builder.Services.AddScoped<IProducerService, ProducerService>();
+builder.Services.AddScoped<ICinemasService, CinemasService>();
+builder.Services.AddScoped<IMoviesService, MoviesService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -34,7 +37,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Movies}/{action=Index}/{id?}");
+
 
 //seed database
 AppDbInitializer.Seed(app);

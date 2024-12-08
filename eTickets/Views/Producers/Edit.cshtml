@@ -1,19 +1,19 @@
-﻿@model Actor
+﻿@model Producer
 
 @{
-    ViewData["Title"] = "Add a new actor";
+    ViewData["Title"] = "Update producer";
 }
 
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Add a New Actor</h1>
+            <h1>Update Actor</h1>
         </p>
         <div class="row text">
             <div class="col-md-8 offset-2">
-               <form asp-action="Create" >
+                <form asp-action="Edit">
 
-                   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
                     <div class="form-group text-center">
@@ -36,10 +36,10 @@
                         <span asp-validation-for="Bio" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-outline-success float-end" />
+                        <input type="submit" value="Update" class="btn btn-outline-success float-end" />
                         <a class="btn btn-outline-secondary " asp-action="Index"> Show All</a>
                     </div>
-               </form>
+                </form>
 
             </div>
         </div>
