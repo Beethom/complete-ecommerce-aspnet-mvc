@@ -76,10 +76,35 @@
                             </div>
                         </li>
                     </ul>
+
                     <form class="form-inline my-2 my-lg-0" asp-controller="Movies" asp-action="Filter" style="padding-right: 25px;">
                         <input name="searchString" type="text" class="form-control" placeholder="Search for a movie..." aria-label="Search" aria-describedby="button-addon2">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
                     </form>
+                    <ul class="navbar-nav">
+                        @await Component.InvokeAsync("ShoppinCartSummary")
+                    </ul>
+
+                    <a class="btn-primary btn-outline-success my-2 my-sm-0" asp-controller="Account" asp-action="Login">
+
+                        <i class="bg-info bi-box-arrow-in-right"></i> Log 
+                    </a>
+
+                   @* user profile section *@
+                    <div class="dropdown">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="User Profile">
+                            <i class="bi bi-person-badge text-info"></i> Hello User
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="profile-btn">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="Index">
+                                    <i class="bi bi-list text-info"></i> Orders
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
                 </div>
             </div>
         </nav>
