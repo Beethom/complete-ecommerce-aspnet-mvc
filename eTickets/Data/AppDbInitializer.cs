@@ -324,27 +324,30 @@ namespace eTickets.Data
             }
         }
 
-        public static async Task SeeduserAndRolesAsync(IApplicationBuilder applicationBuilder)
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
+
+                //Roles
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
                 if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-
                 if (!await roleManager.RoleExistsAsync(UserRoles.User))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                //users
+                //Users
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 string adminUserEmail = "admin@etickets.com";
+
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
                 if (adminUser == null)
                 {
                     var newAdminUser = new ApplicationUser()
                     {
                         FullName = "Admin User",
-                        UserName = "admin",
+                        UserName = "admin-user",
                         Email = adminUserEmail,
                         EmailConfirmed = true
                     };
@@ -354,12 +357,13 @@ namespace eTickets.Data
 
 
                 string appUserEmail = "user@etickets.com";
+
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
                 {
                     var newAppUser = new ApplicationUser()
                     {
-                        FullName = " Application User",
+                        FullName = "Application User",
                         UserName = "app-user",
                         Email = appUserEmail,
                         EmailConfirmed = true
@@ -367,7 +371,6 @@ namespace eTickets.Data
                     await userManager.CreateAsync(newAppUser, "Coding@1234?");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
-
             }
         }
     }

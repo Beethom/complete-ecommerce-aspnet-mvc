@@ -1,23 +1,27 @@
 ﻿using eTickets.Data;
 using eTickets.Data.Services;
 using eTickets.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace eTickets.Controllers
 {
+    [Authorize]
     public class ProducersController : Controller
     {
 
         private readonly IProducerService _service;
 
-        public ProducersController (IProducerService service)
+        public ProducersController(IProducerService service)
         {
 
             _service = service;
 
         }
-        public async Task <IActionResult> Index()
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
 
             var allProducers = await _service.GetAllAsync();
@@ -25,7 +29,7 @@ namespace eTickets.Controllers
         }
 
         //GET: PRODUCERS/DETAILS/1
-
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var producerDetails = await _service.GetByIdAsync(id);
@@ -42,22 +46,22 @@ namespace eTickets.Controllers
         {
             if (ModelState.IsValid) return View(producer);
 
-          
-            
-                await _service.AddAsync(producer);
-                return RedirectToAction(nameof(Index));
-            
+
+
+            await _service.AddAsync(producer);
+            return RedirectToAction(nameof(Index));
+
         }
 
         //GET: Producers/edit/1
-        public async Task< IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var producerDetails = await _service.GetByIdAsync(id);
             if (producerDetails == null) return View("Notfound");
             return View(producerDetails);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id,[Bind("Id,FullName,ProfilePictureURL,Bio")] Producer producer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,ProfilePictureURL,Bio")] Producer producer)
         {
             if (ModelState.IsValid) return View(producer);
 

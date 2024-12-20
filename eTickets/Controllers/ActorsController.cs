@@ -1,10 +1,16 @@
-﻿using eTickets.Data;
-using eTickets.Data.Services;
+﻿using eTickets.Data.Services;
+using eTickets.Data.Static;
 using eTickets.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace eTickets.Controllers
 {
+    [Authorize]
     public class ActorsController : Controller
     {
 
@@ -13,10 +19,12 @@ namespace eTickets.Controllers
         public ActorsController(IActorsService service)
         {
 
-         _service=service; 
-        
+            _service = service;
+
         }
-        public async Task< IActionResult> Index()
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
 
             var data = await _service.GetAllAsync();
@@ -30,17 +38,18 @@ namespace eTickets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("FullName,ProfilePictureURL,Bio")]Actor actor)
+        public async Task<IActionResult> Create([Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
         {
             if (ModelState.IsValid)
             {
                 return View(actor);
             }
-            await    _service.AddAsync(actor);
+            await _service.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
 
         //Get: Actors/Details/1
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var actorDetails = await _service.GetByIdAsync(id);
@@ -84,8 +93,8 @@ namespace eTickets.Controllers
             if (actorDetails == null) return View("NotFound");
 
             await _service.DeleteAsync(id);
-            
-            
+
+
             return RedirectToAction(nameof(Index));
         }
 
